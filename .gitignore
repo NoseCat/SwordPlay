@@ -1,0 +1,26 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+export/
+*.import
+.gdignore
+
+# Compiled files
+*.stex
+*.ctex
+*.rsc
+*.scn
+*.tscn
+*.res
+*.tres
+*.uid
+
+todo.txt
+settings.cfg
+
+# Backup files
+*~
+
+# Editor settings
+.editorconfig
+.vscode/
