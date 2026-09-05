@@ -27,6 +27,12 @@ LMB={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Wall"
+3d_physics/layer_2="Flesh"
+3d_physics/layer_3="Blade"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

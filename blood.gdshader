@@ -10,11 +10,18 @@ uniform int point_count = 0;
 
 void fragment() {
 	ALBEDO = color.rgb;
-	float final_alpha = color.a;
+	float final_alpha = 0.0f;
+	float spread = time * 3.0f;
+	vec2 spread_point = vec2(0, 0.5f);
+	if (distance(UV, spread_point) < spread)
+	{
+		final_alpha = color.a;
+	}
 
-	for (int i = 0; i < point_count; i++) {
+	for (int i = 0; i < point_count; i++) 
+	{
 		vec2 p = points[i].xy;
-		float r = time * points[i].z;
+		float r = time * points[i].z * 2.0f;
 		float d = distance(UV, p);
 
 		// Hard-edged hole (alpha = 0)
@@ -22,12 +29,6 @@ void fragment() {
 			final_alpha = 0.0;
 			break;
 		}
-
-		/* Soft-edged version (uncomment to use instead):
-		float edge = 0.008;
-		float hole = 1.0 - smoothstep(r - edge, r, d);
-		final_alpha *= (1.0 - hole);
-		*/
 	}
 
 	ALPHA = final_alpha;
