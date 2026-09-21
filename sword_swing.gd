@@ -4,9 +4,11 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-var player_rotation #angle to +y, inditcating where player is looking
 var swing_dir = Vector2(0,1) # direction from which the swing comes
 var swing_state = 0 #how far are we into the swing 
+
+enum State { IDLE, WINDUP, SWING, WINDDOWN }
+var state = State.IDLE
 
 var swing: bool = false
 var wind: bool = false
@@ -19,20 +21,26 @@ var winddown_accum = winddown_time
 
 var swing_dir_q = Quaternion(Vector3.FORWARD, 0)
 
+
+
 func _process(delta: float) -> void:
 	
-	var y_axis_q = Quaternion(Vector3.UP, $"../Camera".rotation.y)
-	var x_axis_q = Quaternion(Vector3.RIGHT, $"../Camera".rotation.x)
+	var camera_space_q = Quaternion(Vector3.UP, $"../Camera".rotation.y) * Quaternion(Vector3.RIGHT, $"../Camera".rotation.x)
 	
-	quaternion = y_axis_q * x_axis_q
-	#winddown_accum += delta
-	#winddown_accum = min(winddown_accum, winddown_time)
-	#quaternion *= swing_dir_q.slerp(Quaternion(Vector3.FORWARD, 0), winddown_accum/winddown_time)
-	#needs pos interpoliation instead
+	quaternion = camera_space_q # Rotate in camera space
+	
+	match state:
+		State.IDLE:
+			pass#idle()
+		State.WINDUP:
+			pass#windup()
+		State.SWING:
+			pass#swing()
+		State.WINDDOWN:
+			pass#winddown()
 	
 	if Input.is_action_just_pressed("LMB"):
-		swing_dir = $"../Crosshair".get_direction()
-		swing_dir_q = Quaternion(Vector3.FORWARD, -swing_dir.angle_to(Vector2.RIGHT)).normalized()
+		swing_dir_q = Quaternion(Vector3.FORWARD, -$"../Crosshair".get_direction().angle_to(Vector2.RIGHT)).normalized()
 		$"../AnimationPlayer".play("wind")
 		wind = true
 		windup_accum = 0
