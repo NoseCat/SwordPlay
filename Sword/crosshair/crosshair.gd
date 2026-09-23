@@ -16,7 +16,7 @@ func _ready():
 	body.size = Vector2(body_diameter, body_diameter)
 	body.position = Vector2(-body.size.x/2, -body.size.y/2)
 	var material = ShaderMaterial.new()
-	material.shader = load("res://crosshair_body.gdshader")
+	material.shader = load("res://Sword/crosshair/crosshair_body.gdshader")
 	var uv_outline = outline_thickness / body_diameter
 	material.set_shader_parameter("fill_color", body_color)
 	material.set_shader_parameter("outline_color", outline_color)
