@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://cajn7pmth67df"]
+
+[ext_resource type="Script" uid="uid://bmmwa78flwp3" path="res://Body/Hands/hands.gd" id="1_td0cs"]
+[ext_resource type="Script" uid="uid://cgt8v03mv8iwc" path="res://Body/Hands/HandIK.gd" id="2_4l4mc"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_n7ghd"]
+radius = 0.05
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ivps1"]
+albedo_color = Color(1, 0.31764707, 0.2901961, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_urp6f"]
+material = SubResource("StandardMaterial3D_ivps1")
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_ivps1"]
+radius = 0.05
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwjto"]
+albedo_color = Color(1, 0.31764707, 0.2901961, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_606se"]
+material = SubResource("StandardMaterial3D_bwjto")
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u1c27"]
+albedo_color = Color(9.62615e-07, 0.64205825, 0.8805916, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nvl01"]
+material = SubResource("StandardMaterial3D_u1c27")
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.4
+
+[node name="Hands" type="Node3D" unique_id=2128425114]
+script = ExtResource("1_td0cs")
+
+[node name="ShoulderCenter" type="Marker3D" parent="." unique_id=676899004]
+rotation_edit_mode = 1
+
+[node name="ShoulderLean" type="Marker3D" parent="." unique_id=353727829]
+transform = Transform3D(0.9015391, -0.23814641, 0.36126655, 0.25539514, 0.96683675, 0, -0.34928578, 0.092265725, 0.9324626, 0.2, 0.050315022, 0)
+rotation_edit_mode = 1
+
+[node name="Shoulders" type="Marker3D" parent="." unique_id=1998228278]
+rotation_edit_mode = 1
+
+[node name="ShoulderRight" type="MeshInstance3D" parent="Shoulders" unique_id=381987456]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, 0.3, 0, 0)
+rotation_edit_mode = 1
+mesh = SubResource("SphereMesh_n7ghd")
+script = ExtResource("2_4l4mc")
+
+[node name="Upperarm" type="MeshInstance3D" parent="Shoulders/ShoulderRight" unique_id=207991619]
+transform = Transform3D(0.9999994, 0, 0, 0, -4.371137e-08, -0.9999997, 0, 0.9999997, -4.3711378e-08, 0, 1.4901161e-07, -0.2)
+rotation_edit_mode = 1
+mesh = SubResource("CylinderMesh_urp6f")
+
+[node name="Elbow" type="MeshInstance3D" parent="Shoulders/ShoulderRight/Upperarm" unique_id=134094168]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, -0.2, 0)
+rotation_edit_mode = 1
+mesh = SubResource("SphereMesh_ivps1")
+
+[node name="Forearm" type="MeshInstance3D" parent="Shoulders/ShoulderRight/Upperarm/Elbow" unique_id=1186017183]
+transform = Transform3D(0.99999976, 0, 0, 0, -4.3711392e-08, -0.9999999, 0, 0.9999999, -4.3711385e-08, 0, 8.940697e-08, -0.20000008)
+rotation_edit_mode = 1
+mesh = SubResource("CylinderMesh_606se")
+
+[node name="Palm" type="MeshInstance3D" parent="Shoulders/ShoulderRight/Upperarm/Elbow/Forearm" unique_id=1144559306]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, -0.2, 0)
+rotation_edit_mode = 1
+mesh = SubResource("SphereMesh_ivps1")
+
+[node name="PrefferedElbow" type="Marker3D" parent="Shoulders/ShoulderRight/Upperarm/Elbow" unique_id=941817420]
+transform = Transform3D(1.0000004, 0, 0, 0, -4.3711392e-08, 1.0000004, 0, -1, -4.3711392e-08, 0, -2.9802322e-08, 0.20000008)
+
+[node name="ShoulderLeft" type="MeshInstance3D" parent="Shoulders" unique_id=405120946]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, -0.3, 0, 0)
+rotation_edit_mode = 1
+mesh = SubResource("SphereMesh_n7ghd")
+script = ExtResource("2_4l4mc")
+
+[node name="Upperarm" type="MeshInstance3D" parent="Shoulders/ShoulderLeft" unique_id=31112026]
+transform = Transform3D(0.9999998, 0, 0, 0, -4.371138e-08, -0.99999994, 0, 0.9999999, -4.371139e-08, 0, 2.9802322e-08, -0.2)
+rotation_edit_mode = 1
+mesh = SubResource("CylinderMesh_nvl01")
+
+[node name="Elbow" type="MeshInstance3D" parent="Shoulders/ShoulderLeft/Upperarm" unique_id=1814353106]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, -0.2, 0)
+rotation_edit_mode = 1
+mesh = SubResource("SphereMesh_ivps1")
+
+[node name="Forearm" type="MeshInstance3D" parent="Shoulders/ShoulderLeft/Upperarm/Elbow" unique_id=1614076987]
+transform = Transform3D(0.9999998, 0, 0, 0, -4.371138e-08, -0.99999994, 0, 0.9999999, -4.3711385e-08, 0, 5.9604645e-08, -0.20000002)
+rotation_edit_mode = 1
+mesh = SubResource("CylinderMesh_nvl01")
+
+[node name="Palm" type="MeshInstance3D" parent="Shoulders/ShoulderLeft/Upperarm/Elbow/Forearm" unique_id=1222771901]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, -0.2, 0)
+rotation_edit_mode = 1
+mesh = SubResource("SphereMesh_ivps1")
+
+[node name="PrefferedElbow" type="Marker3D" parent="Shoulders/ShoulderLeft/Upperarm/Elbow" unique_id=652471765]
+transform = Transform3D(1.0000002, 0, 0, 0, -4.3711395e-08, 1.0000002, 0, -1, -4.371139e-08, 0, -2.9802322e-08, 0.20000005)

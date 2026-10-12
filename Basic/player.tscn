@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://b3ax0gwl2pfdt"]
+
+[ext_resource type="Script" uid="uid://kj7rrfqaux4p" path="res://Basic/camera.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://s0d2pcs78ykd" path="res://Basic/player.gd" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://bf2cflpae4qf6" path="res://Basic/look_at.gd" id="3_b26j0"]
+[ext_resource type="Script" uid="uid://65fyrw05f8wb" path="res://Sword/crosshair/crosshair.gd" id="3_hqtel"]
+[ext_resource type="Shader" uid="uid://d34rsbrjnyrmy" path="res://Sword/crosshair/crosshair_body.gdshader" id="3_i3pqv"]
+[ext_resource type="Shader" uid="uid://ddbdudvryx8hy" path="res://Sword/crosshair/arrow.gdshader" id="6_2hs0m"]
+[ext_resource type="PackedScene" uid="uid://cajn7pmth67df" path="res://Body/Hands/hands.tscn" id="8_dw050"]
+[ext_resource type="PackedScene" uid="uid://bedk2ntqyfnwe" path="res://Sword/sword.tscn" id="9_b26j0"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_onrkg"]
+radius = 0.3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_urp6f"]
+radius = 0.3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1jxqw"]
+shader = ExtResource("6_2hs0m")
+shader_parameter/outline_thickness = 0.05
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hqtel"]
+shader = ExtResource("3_i3pqv")
+shader_parameter/radius = 0.5
+shader_parameter/outline_thickness = 0.05
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=829881822]
+script = ExtResource("1_onrkg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=980945230]
+shape = SubResource("CapsuleShape3D_onrkg")
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=252094093]
+visible = false
+mesh = SubResource("CapsuleMesh_urp6f")
+
+[node name="Camera" type="Camera3D" parent="." unique_id=600090036]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+fov = 90.0
+script = ExtResource("1_4flbx")
+
+[node name="LookAt" type="Marker3D" parent="Camera" unique_id=534499149]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+script = ExtResource("3_b26j0")
+
+[node name="Crosshair" type="Control" parent="." unique_id=2003819334]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("3_hqtel")
+
+[node name="Arrow" type="ColorRect" parent="Crosshair" unique_id=1235488342]
+material = SubResource("ShaderMaterial_1jxqw")
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -60.0
+offset_right = 15.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(15, 60)
+mouse_filter = 2
+
+[node name="CrosshairBody" type="ColorRect" parent="Crosshair" unique_id=1298587327]
+material = SubResource("ShaderMaterial_hqtel")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SwordCenter" parent="." unique_id=1544335584 node_paths=PackedStringArray("camera", "crosshair") instance=ExtResource("9_b26j0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42270243, 0)
+camera = NodePath("../Camera")
+crosshair = NodePath("../Crosshair")
+
+[node name="Hands" parent="." unique_id=2128425114 node_paths=PackedStringArray("camera", "weapon") instance=ExtResource("8_dw050")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+camera = NodePath("../Camera")
+weapon = NodePath("../SwordCenter")

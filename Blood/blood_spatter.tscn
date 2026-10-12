@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://baj5mcktbcq3m"]
 
-[ext_resource type="Shader" uid="uid://ybwbrhje6qwf" path="res://blood.gdshader" id="1_cdcje"]
-[ext_resource type="Script" uid="uid://c7cd75b7cijnk" path="res://blood_spatter.gd" id="1_ch1v5"]
-[ext_resource type="Script" uid="uid://carmlcjge1geg" path="res://blood_spatter_mesh.gd" id="3_i2yff"]
+[ext_resource type="Shader" uid="uid://ybwbrhje6qwf" path="res://Blood/blood.gdshader" id="1_cdcje"]
+[ext_resource type="Script" uid="uid://c7cd75b7cijnk" path="res://Blood/blood_spatter.gd" id="1_ch1v5"]
+[ext_resource type="Script" uid="uid://carmlcjge1geg" path="res://Blood/blood_spatter_mesh.gd" id="3_i2yff"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ch1v5"]
 render_priority = 0

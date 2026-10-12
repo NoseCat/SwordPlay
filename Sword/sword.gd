@@ -1,20 +1,25 @@
+class_name Sword
 extends Marker3D
 
 #stats
 @export var windup_time := 0.5
 @export var winddown_time := 1.0
 @export var swing_speed := 5.0
-@export var max_swing_angle := deg_to_rad(150)
+@export_custom(PROPERTY_HINT_NONE, "radians_as_degrees") var max_swing_angle := deg_to_rad(150)
+
+#const
+@export var sword : Node3D
+@export var right_hand_rest_pos : Marker3D
+@export var left_hand_rest_pos : Marker3D
 
 #parts
-@onready var camera := $"../Camera"
-@onready var crosshair := $"../Crosshair"
-@onready var sword := $SwordGrip
+@export var camera: Node3D 
+@export var crosshair: Control
 
 #anim
-@export var idle_pos: Node 
+@onready var idle_pos: Node3D = $IdleTransform
 @export var idle_q: Quaternion = Quaternion()
-@export var swing_pos: Node 
+@onready var swing_pos: Node3D = $SwingTransform
 @onready var anim_player = $AnimationPlayer
 
 var local_q := Quaternion()

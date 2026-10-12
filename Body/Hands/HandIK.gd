@@ -6,9 +6,7 @@ var preferred_elbow_pos: Vector3
 var UpperarmLength: float
 var ForearmLength: float
 
-@export var hand_rest_path: NodePath
-
-@onready var hand_rest: Node3D = get_node(hand_rest_path)
+var hand_rest
 
 func _ready():
 	UpperarmLength = $Upperarm.mesh.height

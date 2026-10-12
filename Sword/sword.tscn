@@ -1,0 +1,175 @@
+[gd_scene format=3 uid="uid://bedk2ntqyfnwe"]
+
+[ext_resource type="Script" uid="uid://vmlhuiemvga0" path="res://Sword/sword.gd" id="1_1pljr"]
+[ext_resource type="PackedScene" uid="uid://b5n864jg4tk8g" path="res://Models/Sword.glb" id="2_1wdf2"]
+[ext_resource type="Script" uid="uid://du21fcmalu5t8" path="res://Sword/blade.gd" id="3_qx5uj"]
+
+[sub_resource type="Animation" id="Animation_1jxqw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SwordCenter/SwordGrip:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.558, -0.06, -0.531)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwordCenter/SwordGrip:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.3002704, -3.1415925, -1.4084806)]
+}
+
+[sub_resource type="Animation" id="Animation_dw050"]
+resource_name = "swing"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SwordCenter/SwordGrip:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.35, 0.44, 0.55, 0.66, 0.8666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.558, -0.06, -0.531), Vector3(0.787, 0, 0.096), Vector3(0.56130326, 0.02424243, -0.3521334), Vector3(0.32534724, 0.013273329, -0.7002443), Vector3(0, 0, -0.8), Vector3(-0.325, 0.013, -0.7), Vector3(-0.561, 0.024, -0.352)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwordCenter/SwordGrip:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.55, 0.8666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1.8413223, 0, 1.733112), Vector3(0, -2.469641, 0), Vector3(0, 0, 0), Vector3(0, 2.469641, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_b26j0"]
+resource_name = "swing2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SwordCenter/SwordGrip:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.6666667, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -1.5707964, 0), Vector3(0, -1.1132234, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("SwordCenter:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 2.0943952, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n7ghd"]
+resource_name = "wind"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SwordCenter/SwordGrip:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.558, -0.06, -0.531), Vector3(1, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwordCenter/SwordGrip:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1.8413223, 0, 1.733112), Vector3(0.28448868, -1.5446163, 0.84299403), Vector3(0, -1.5707964, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b26j0"]
+_data = {
+&"RESET": SubResource("Animation_1jxqw"),
+&"swing": SubResource("Animation_dw050"),
+&"swing2": SubResource("Animation_b26j0"),
+&"wind": SubResource("Animation_n7ghd")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b26j0"]
+size = Vector3(0.12034607, 0.06317139, 1.3633881)
+
+[node name="SwordCenter" type="Marker3D" unique_id=1544335584 node_paths=PackedStringArray("sword", "right_hand_rest_pos", "left_hand_rest_pos")]
+rotation_edit_mode = 1
+script = ExtResource("1_1pljr")
+sword = NodePath("SwordGrip")
+right_hand_rest_pos = NodePath("SwordGrip/RightHandRest")
+left_hand_rest_pos = NodePath("SwordGrip/LeftHandRest")
+
+[node name="IdleTransform" type="Marker3D" parent="." unique_id=1672505267]
+transform = Transform3D(-0.16160373, -0.9868557, -4.035185e-08, -0.26372558, 0.043186735, -0.9636305, 0.9509642, -0.15572628, -0.26723823, 0.558, -0.06, -0.531)
+rotation_edit_mode = 1
+
+[node name="SwingTransform" type="Marker3D" parent="." unique_id=656623057]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 1, 0, 0)
+rotation_edit_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1118514916]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_b26j0")
+
+[node name="SwordGrip" type="Marker3D" parent="." unique_id=2126800679]
+transform = Transform3D(-0.16160353, -0.9868546, -4.0351853e-08, -0.26372522, 0.04318669, -0.9636306, 0.95096296, -0.15572612, -0.26723826, 0.558, -0.06, -0.531)
+rotation_edit_mode = 1
+
+[node name="Sword" parent="SwordGrip" unique_id=1316770815 instance=ExtResource("2_1wdf2")]
+transform = Transform3D(-2.6424265e-09, 3.9899535e-16, 0.035000008, -5.284853e-09, -0.035, 0, 0.035, -5.284853e-09, 2.6424272e-09, -0.0017385781, 0, -0.33290708)
+
+[node name="Blade" type="Area3D" parent="SwordGrip" unique_id=490759248]
+rotation_edit_mode = 1
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("3_qx5uj")
+
+[node name="BladeCollision" type="CollisionShape3D" parent="SwordGrip/Blade" unique_id=1277984808]
+transform = Transform3D(1.0000007, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, -4.172325e-07, 7.8231096e-08, 1, -1.1920929e-07, 1.1920929e-07, -0.6930922)
+shape = SubResource("BoxShape3D_b26j0")
+
+[node name="RayCast3D" type="RayCast3D" parent="SwordGrip/Blade" unique_id=1948889339]
+target_position = Vector3(0, 0, -1.4)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="RightHandRest" type="Marker3D" parent="SwordGrip" unique_id=1239345497]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.08)
+
+[node name="LeftHandRest" type="Marker3D" parent="SwordGrip" unique_id=582286006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.23)
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="area_entered" from="SwordGrip/Blade" to="." method="_on_blade_area_entered"]
+[connection signal="body_entered" from="SwordGrip/Blade" to="." method="_on_blade_body_entered"]

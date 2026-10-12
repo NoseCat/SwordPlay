@@ -19,6 +19,16 @@ config/icon="res://icon.svg"
 
 project/assembly_name="SwordPlay"
 
+[file_customization]
+
+folder_colors={
+"res://Blood/": "red",
+"res://Body/": "yellow",
+"res://Models/": "pink",
+"res://StateMachine/": "teal",
+"res://Sword/": "red"
+}
+
 [input]
 
 LMB={
