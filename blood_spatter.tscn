@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://baj5mcktbcq3m"]
+
+[ext_resource type="Shader" uid="uid://ybwbrhje6qwf" path="res://blood.gdshader" id="1_cdcje"]
+[ext_resource type="Script" uid="uid://c7cd75b7cijnk" path="res://blood_spatter.gd" id="1_ch1v5"]
+[ext_resource type="Script" uid="uid://carmlcjge1geg" path="res://blood_spatter_mesh.gd" id="3_i2yff"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ch1v5"]
+render_priority = 0
+shader = ExtResource("1_cdcje")
+shader_parameter/color = Color(0.12, 0.58, 0.95, 1)
+shader_parameter/time = 0.0
+shader_parameter/points = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/point_count = 0
+shader_parameter/topRight = Vector3(1, 0, 1)
+shader_parameter/topLeft = Vector3(1, 0, -1)
+shader_parameter/bottomRight = Vector3(-1, 0, 1)
+shader_parameter/bottomLeft = Vector3(-1, 0, -1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i2yff"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("ShaderMaterial_ch1v5")
+
+[node name="BloodSpatter" type="Node3D" unique_id=1342246521]
+rotation_edit_mode = 1
+script = ExtResource("1_ch1v5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=577870094]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("PlaneMesh_i2yff")
+script = ExtResource("3_i2yff")
+min_points = 20
+skew_towards = Vector2(1, 0.5)
+skew_strength = 0.0
+max_grow_speed = 0.1
+
+[node name="BottomLeft" type="Marker3D" parent="MeshInstance3D" unique_id=1856082374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+
+[node name="BottomRight" type="Marker3D" parent="MeshInstance3D" unique_id=933093623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="TopLeft" type="Marker3D" parent="MeshInstance3D" unique_id=443721602]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+
+[node name="TopRight" type="Marker3D" parent="MeshInstance3D" unique_id=1280729774]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)

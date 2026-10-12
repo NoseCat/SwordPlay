@@ -3,7 +3,7 @@ extends State
 
 var interp_t := 0.0
 
-var swing_left_q: Quaternion = Quaternion()
+var swing_left_q: Quaternion = Quaternion() #left as in leave
 var swing_left_sword_t: Transform3D = Transform3D()
 
 func enter():

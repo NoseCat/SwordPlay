@@ -3,17 +3,10 @@
 /android/
 export/
 *.import
-.gdignore
 
 # Compiled files
-*.stex
-*.ctex
 *.rsc
-*.scn
-*.tscn
 *.res
-*.tres
-*.uid
 
 todo.txt
 settings.cfg

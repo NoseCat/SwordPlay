@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cunu1jadqw4nf"]
+
+[ext_resource type="PackedScene" uid="uid://b3ax0gwl2pfdt" path="res://player.tscn" id="1_u52ul"]
+[ext_resource type="PackedScene" uid="uid://few4r67ra3hf" path="res://enemy.tscn" id="2_vonw3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u52ul"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_vonw3"]
+sky_material = SubResource("ProceduralSkyMaterial_u52ul")
+
+[sub_resource type="Environment" id="Environment_oi3di"]
+background_mode = 2
+sky = SubResource("Sky_vonw3")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5xgho"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u52ul"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u52ul"]
+size = Vector3(10, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vonw3"]
+size = Vector3(10, 10, 1)
+
+[node name="Node3D" type="Node3D" unique_id=1618435626]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=950176905]
+environment = SubResource("Environment_oi3di")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1324938364]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=788298366]
+shape = SubResource("BoxShape3D_5xgho")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D" unique_id=91424157]
+mesh = SubResource("BoxMesh_u52ul")
+
+[node name="CharacterBody3D" parent="." unique_id=829881822 instance=ExtResource("1_u52ul")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4804177, 0)
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=1654243358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.8304453)
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=250368623]
+shape = SubResource("BoxShape3D_u52ul")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2/CollisionShape3D" unique_id=797131594]
+mesh = SubResource("BoxMesh_vonw3")
+
+[node name="Enemy" parent="." unique_id=357414427 instance=ExtResource("2_vonw3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3437977, 1.5000005, -3.2545793)
