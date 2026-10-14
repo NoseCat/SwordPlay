@@ -43,7 +43,7 @@ func generate_points():
 	var mat := get_surface_override_material(0)
 	if mat == null or not (mat is ShaderMaterial):
 		mat = ShaderMaterial.new()
-		mat.shader = preload("res://blood.gdshader") 
+		mat.shader = preload("res://Blood/blood.gdshader") 
 		set_surface_override_material(0, mat)
 
 	var count := randi_range(min_points, max_points) if randomize_count else point_count

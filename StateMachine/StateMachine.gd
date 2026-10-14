@@ -16,6 +16,7 @@ func add_state(state: State, _name: String):
 	state.name = _name
 	states[state.name] = state
 	state.host = host
+	state.init()
 
 func add(state: State):
 	add_state(state, state.get_script().get_global_name())

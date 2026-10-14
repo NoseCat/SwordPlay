@@ -1,22 +1,22 @@
 class_name SwordWinddown
 extends State
 
-var interp_t := 0.0
-
-var swing_left_q: Quaternion = Quaternion() #left as in leave
-var swing_left_sword_t: Transform3D = Transform3D()
+func init() -> void:
+	host.winddown_timer.timeout.connect(_on_winddown_done)
 
 func enter():
-	interp_t = 0.0
-	host.sword_transform = host.swing_pos.transform
-	swing_left_q = host.local_q #not exactly
-	swing_left_sword_t = host.sword_transform
+	host.tween_pivot(host.pivot_idle_q, host.winddown_anim_time)
+	host.tween_sword(host.sword_idle_t, host.winddown_anim_time)
+
+	host.swing_angle = 0.0
+	host.winddown_timer.start()
+
 
 func process(delta: float):
-	interp_t += delta
-	var k = clamp(interp_t / host.winddown_time, 0.0, 1.0)
-	host.local_q = swing_left_q.slerp(host.idle_q, k)
-	host.sword_transform = swing_left_sword_t.interpolate_with(host.idle_pos.transform, k)
+	pass
 
-	if interp_t >= host.winddown_time:
-		machine.change("SwordIdle")
+func exit() -> void:
+	host.winddown_timer.stop()
+
+func _on_winddown_done():
+	change("SwordIdle")

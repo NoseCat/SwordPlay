@@ -7,30 +7,37 @@ extends Marker3D
 @export var swing_speed := 5.0
 @export_custom(PROPERTY_HINT_NONE, "radians_as_degrees") var max_swing_angle := deg_to_rad(150)
 
-#const
+#const parts
 @export var sword : Node3D
 @export var right_hand_rest_pos : Marker3D
 @export var left_hand_rest_pos : Marker3D
+@export var anim_player: AnimationPlayer
+@export var windup_timer: Timer
+@export var winddown_timer: Timer
 
-#parts
+#interaction nodes
 @export var camera: Node3D 
 @export var crosshair: Control
 
 #anim
-@onready var idle_pos: Node3D = $IdleTransform
-@export var idle_q: Quaternion = Quaternion()
-@onready var swing_pos: Node3D = $SwingTransform
-@onready var anim_player = $AnimationPlayer
+@onready var pivot_idle_q: Quaternion = Quaternion()
+@onready var sword_idle_t: Transform3D = $IdleTransform.transform
+@onready var sword_swing_t: Transform3D = $SwingTransform.transform
+@export var windup_anim_time: float
+@export var winddown_anim_time: float
 
-var local_q := Quaternion()
-@onready var sword_transform = sword.transform
-
+#variables
+var pivot_q := self.quaternion
+@onready var sword_t = sword.transform
 var state: StateMachine
 
-var swing_dir_q := Quaternion() # swing axis
-var swing_angle := 0.0
+var pivot_swing_q := Quaternion()
+var swing_angle := 0.0 # how far are we into swing 
 
 func _ready() -> void:
+	windup_timer.wait_time = windup_time
+	winddown_timer.wait_time = winddown_time
+
 	state = StateMachine.new(self) #creating state machine with this object as a host
 	state.add(SwordIdle.new())
 	state.add(SwordWindup.new())
@@ -40,20 +47,53 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	state.process(delta)
+	apply_pose()
 
+func apply_pose() -> void:
 	var camera_q = (Quaternion(Vector3.UP, camera.rotation.y) * Quaternion(Vector3.RIGHT, camera.rotation.x))
-	quaternion = camera_q * local_q
-	sword.transform = sword_transform
+	quaternion = camera_q * pivot_q
+	sword.transform = sword_t
 
 func attack() -> void:
+	var crosshair_angle = crosshair.get_direction().angle_to(Vector2.RIGHT)
+	pivot_swing_q = Quaternion(Vector3.FORWARD, -crosshair_angle).normalized()
+
 	state.change("SwordWindup")
 
 func stop_swing() -> void:
-	state.change("SwordWinddown") #temporary
+	pass
+	#state.change("SwordWinddown") #temporary
 
+var pivot_tween: Tween
+var sword_tween: Tween
+
+#anim
+func tween_pivot(target: Quaternion,time: float, trans := Tween.TRANS_LINEAR, tween_ease := Tween.EASE_IN_OUT):
+	if pivot_tween: pivot_tween.kill()
+	pivot_tween = create_tween()
+	pivot_tween.tween_property(self, "pivot_q", target, time).set_trans(trans).set_ease(tween_ease)
+
+func tween_sword(target: Transform3D, time: float, trans := Tween.TRANS_LINEAR, tween_ease := Tween.EASE_IN_OUT):
+	if sword_tween: sword_tween.kill()
+	sword_tween = create_tween()
+	sword_tween.tween_property(self, "sword_t", target, time).set_trans(trans).set_ease(tween_ease)
+
+func animate(anim_name: StringName, time := 1.0, blend := 0.0):
+	var speed := 1.0
+	speed = anim_player.get_animation(anim_name).length / time
+
+	anim_player.play(anim_name, blend, speed)
+
+func stop_anims() -> void:
+	if pivot_tween: pivot_tween.kill()
+	if sword_tween: sword_tween.kill()
+	if anim_player.is_playing(): anim_player.stop(true)
+
+
+#signals
 func _on_blade_area_entered(area: Area3D) -> void:
 	if area.get_collision_layer_value(2):
-		var packed_scene = preload("res://blood_spatter.tscn")
+		var packed_scene = preload("res://Blood/blood_spatter.tscn")
 		var instance = packed_scene.instantiate()
 		add_child(instance)
 		var col = $SwordGrip/Blade/RayCast3D.get_collision_point()

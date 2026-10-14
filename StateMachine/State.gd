@@ -2,6 +2,7 @@ class_name State
 extends RefCounted
 
 var name: String
+func init() -> void: pass
 func enter() -> void: pass
 func exit() -> void: pass
 func process(delta: float) -> void: pass

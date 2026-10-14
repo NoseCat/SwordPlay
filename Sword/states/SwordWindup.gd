@@ -2,26 +2,23 @@
 class_name SwordWindup
 extends State
 
-var interp_t := 0.0
+func init() -> void:
+	host.windup_timer.timeout.connect(_on_windup_done)
 
 func enter():
-	var crosshair_angle = host.crosshair.get_direction().angle_to(Vector2.RIGHT)
-	host.swing_dir_q = Quaternion(Vector3.FORWARD, -crosshair_angle).normalized()
-	
-	interp_t = 0.0 #starting pos, drop to idle
-	host.local_q = Quaternion.IDENTITY
-	host.sword_transform = host.idle_pos.transform
-	
-	#anim takes priority over code driven changes
-	var anim = host.anim_player.get_animation("wind")
-	var speed = anim.length / host.windup_time
-	host.anim_player.play("wind", -1.0, speed, false)
+	#anims
+	host.tween_pivot(host.pivot_swing_q, host.windup_anim_time)
+	host.tween_sword(host.sword_swing_t, host.windup_anim_time)
+	host.animate("wind", host.windup_time)
+
+	#logic
+	host.windup_timer.start(host.windup_time)
 
 func process(delta: float):
-	interp_t += delta 
-	var k = clamp(interp_t / host.windup_time, 0.0, 1.0) #interp gets normalized with time
-	host.local_q = Quaternion.IDENTITY.slerp(host.swing_dir_q, k)
-	host.sword_transform = host.idle_pos.transform.interpolate_with(host.swing_pos.transform, k)
+	pass
 
-	if interp_t >= host.windup_time:
-		machine.change("SwordSwing")
+func exit() -> void:
+	host.windup_timer.stop()
+
+func _on_windup_done():
+	machine.change("SwordSwing")
