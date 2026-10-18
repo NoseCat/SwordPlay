@@ -123,7 +123,7 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_b26j0"]
 size = Vector3(0.12034607, 0.06317139, 1.3633881)
 
-[node name="SwordCenter" type="Marker3D" unique_id=1544335584 node_paths=PackedStringArray("sword", "right_hand_rest_pos", "left_hand_rest_pos", "anim_player", "windup_timer", "winddown_timer")]
+[node name="SwordCenter" type="Marker3D" unique_id=1544335584 node_paths=PackedStringArray("sword", "right_hand_rest_pos", "left_hand_rest_pos", "anim_player", "windup_timer", "stab_windup_timer", "parry_windup_timer", "winddown_timer")]
 rotation_edit_mode = 1
 script = ExtResource("1_1pljr")
 winddown_time = 0.5
@@ -132,8 +132,9 @@ right_hand_rest_pos = NodePath("SwordGrip/RightHandRest")
 left_hand_rest_pos = NodePath("SwordGrip/LeftHandRest")
 anim_player = NodePath("AnimationPlayer")
 windup_timer = NodePath("WindupTime")
+stab_windup_timer = NodePath("StabWindup")
+parry_windup_timer = NodePath("ParryWindupTimer")
 winddown_timer = NodePath("WinddownTime")
-windup_anim_time = 0.5
 winddown_anim_time = 0.7
 
 [node name="IdleTransform" type="Marker3D" parent="." unique_id=1672505267]
@@ -144,12 +145,24 @@ rotation_edit_mode = 1
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 1, 0, 0)
 rotation_edit_mode = 1
 
+[node name="StabTransform" type="Marker3D" parent="." unique_id=644306801]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+rotation_edit_mode = 1
+
+[node name="StabStrikeTransform" type="Marker3D" parent="." unique_id=376528031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+rotation_edit_mode = 1
+
+[node name="ParryTransform" type="Marker3D" parent="." unique_id=237876067]
+transform = Transform3D(0.31986803, -0.041673064, 0.94654524, -0.94235504, -0.11758244, 0.3132753, 0.098241955, -0.99218833, -0.07688165, 0.52903414, 0.5298341, -0.531)
+rotation_edit_mode = 1
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1118514916]
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_b26j0")
 
 [node name="SwordGrip" type="Marker3D" parent="." unique_id=2126800679]
-transform = Transform3D(-0.16160351, -0.98685455, -4.0351853e-08, -0.26372522, 0.043186687, -0.9636306, 0.9509629, -0.1557261, -0.26723826, 0.558, -0.06, -0.531)
+transform = Transform3D(-0.16160354, -0.9868549, -4.0351864e-08, -0.26372525, 0.0431867, -0.96363086, 0.9509631, -0.15572616, -0.26723832, 0.558, -0.06, -0.531)
 rotation_edit_mode = 1
 
 [node name="Sword" parent="SwordGrip" unique_id=1316770815 instance=ExtResource("2_1wdf2")]
@@ -180,6 +193,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.23)
 one_shot = true
 
 [node name="WinddownTime" type="Timer" parent="." unique_id=311866389]
+one_shot = true
+
+[node name="StabWindup" type="Timer" parent="." unique_id=573741958]
+one_shot = true
+
+[node name="ParryWindupTimer" type="Timer" parent="." unique_id=455444618]
 one_shot = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

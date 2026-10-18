@@ -1,7 +1,7 @@
+Notes from MORDHAU
 sensetivity/rotation speed limit
 sword trail
 crosshair lokes when in swing
-
 
 Feint?
 Bot Parry?
@@ -15,9 +15,16 @@ hit recoil, parry hit recoil
 
 strike travels in a flater arc
 
+left-right swinging ?
 
 
-TODO
 
-left-right swinging
+TODO:
 
+Smoother anims
+Swing through tweens
+Hands get into the camera (Maybe close cut off with dither?)
+Collisions with geometry
+get rid of timers
+
+rename everything

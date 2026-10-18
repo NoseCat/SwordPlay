@@ -1,4 +1,3 @@
-# SwordWindup.gd
 class_name SwordWindup
 extends State
 
