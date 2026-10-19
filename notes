@@ -25,6 +25,12 @@ Smoother anims
 Swing through tweens
 Hands get into the camera (Maybe close cut off with dither?)
 Collisions with geometry
-get rid of timers
+make 2 tweens into 1
 
 rename everything
+
+
+
+DELIBARATE DESIGN CHOICES:
+- No animations/logic seperation in weapon realted code
+-- The logic of how weapon behaves is tied to its in world position/physics so untangeling it introduces more issues than its worth

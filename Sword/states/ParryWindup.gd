@@ -1,21 +1,14 @@
 class_name ParryWindup
 extends State
 
-func init() -> void:
-	host.parry_windup_timer.timeout.connect(_on_windup_done)
+#func init() -> void:
 
 func enter():
-	#anims
-	host.tween_sword(host.parry_t, host.parry_windup_anim_time)
+	host.tween_sword(host.parry_t, host.parry_windup_time).finished.connect(_on_windup_done)
 
-	#logic
-	host.parry_windup_timer.start(host.parry_windup_time)
+#func process(delta: float):
 
-func process(delta: float):
-	pass
-
-func exit() -> void:
-	host.parry_windup_timer.stop()
+#func exit() -> void:
 
 func _on_windup_done():
-	machine.change("Parry")
+	change("Parry")
