@@ -4,8 +4,8 @@ extends State
 #func init() -> void:
 
 func enter():
-	host.tween_pivot(host.pivot_swing_q, host.stab_windup_time).finished.connect(_on_windup_done)
-	host.tween_sword(host.sword_stab_t, host.stab_windup_time)
+	host.tween_sword_mult(host.pivot_swing_q, host.sword_stab_t, host.stab_windup_time).finished.connect(_on_windup_done)
+
 
 #func process(delta: float):
 

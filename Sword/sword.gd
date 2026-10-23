@@ -19,7 +19,6 @@ extends Marker3D
 
 #interaction nodes
 @export var camera: Node3D 
-@export var crosshair: Control
 
 #poses
 @onready var pivot_idle_q: Quaternion = self.quaternion
@@ -64,22 +63,17 @@ func apply_pose() -> void:
 	sword.transform = sword_t
 
 
-func attack() -> void:
-	var crosshair_angle = crosshair.get_direction().angle_to(Vector2.RIGHT)
+func attack(crosshair_angle: float) -> void:
 	pivot_swing_q = Quaternion(Vector3.FORWARD, -crosshair_angle).normalized()
 
 	state.change("SwingWindup")
 	
-func stab() -> void:
-	var crosshair_angle = crosshair.get_direction().angle_to(Vector2.RIGHT)
+func stab(crosshair_angle: float) -> void:
 	pivot_swing_q = Quaternion(Vector3.FORWARD, -crosshair_angle).normalized()
 
 	state.change("StabWindup")
 
 func parry() -> void:
-	var crosshair_angle = crosshair.get_direction().angle_to(Vector2.RIGHT)
-	pivot_swing_q = Quaternion(Vector3.FORWARD, -crosshair_angle).normalized()
-
 	state.change("ParryWindup")
 
 
@@ -101,6 +95,14 @@ func tween_sword(target: Transform3D, time: float, trans := Tween.TRANS_LINEAR, 
 	sword_tween.tween_property(self, "sword_t", target, time).set_trans(trans).set_ease(tween_ease)
 	return sword_tween
 
+func tween_sword_mult(q: Quaternion, t: Transform3D, time: float, trans := Tween.TRANS_LINEAR, tween_ease := Tween.EASE_IN_OUT):
+	var tween = tween_sword(Transform3D(Basis(q), Vector3.ZERO) * t, time, trans, tween_ease)
+	tween.finished.connect(func():
+		pivot_q = q
+		sword_t = t)
+	return tween
+
+	
 # func animate(anim_name: StringName, time := 1.0, blend := 0.0):
 # 	var speed := 1.0
 # 	speed = anim_player.get_animation(anim_name).length / time

@@ -25,10 +25,12 @@ Smoother anims
 Swing through tweens
 Hands get into the camera (Maybe close cut off with dither?)
 Collisions with geometry
-make 2 tweens into 1
+make 2 tweens into 1 # maybe only set pivot and tween sword to global?
 
 rename everything
 
+rewrite crosshair
+rewrite hands
 
 
 DELIBARATE DESIGN CHOICES:

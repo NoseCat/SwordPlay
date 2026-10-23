@@ -12,7 +12,7 @@ func _init(_host):
 	host = _host
 
 func add_state(state: State, _name: String):
-	state.state = self
+	state.machine = self
 	state.name = _name
 	states[state.name] = state
 	state.host = host

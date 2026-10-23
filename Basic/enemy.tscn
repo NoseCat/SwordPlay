@@ -1,13 +1,19 @@
 [gd_scene format=3 uid="uid://few4r67ra3hf"]
 
 [ext_resource type="Script" uid="uid://7rb7ssfi2gtw" path="res://Basic/enemy.gd" id="1_7k104"]
+[ext_resource type="PackedScene" uid="uid://bedk2ntqyfnwe" path="res://Sword/sword.tscn" id="2_ch3w2"]
+[ext_resource type="Script" uid="uid://c8llfxv1tmly4" path="res://Basic/mock_camera.gd" id="3_qoaj6"]
+[ext_resource type="PackedScene" uid="uid://cajn7pmth67df" path="res://Body/Hands/hands.tscn" id="4_51dab"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4gyqm"]
+radius = 0.3
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qi2p4"]
+radius = 0.3
 
-[node name="Enemy" type="Node3D" unique_id=357414427]
+[node name="Enemy" type="Node3D" unique_id=357414427 node_paths=PackedStringArray("weapon")]
 script = ExtResource("1_7k104")
+weapon = NodePath("SwordCenter")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=882093229]
 collision_layer = 2
@@ -18,5 +24,18 @@ shape = SubResource("CapsuleShape3D_4gyqm")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1935267263]
 mesh = SubResource("CapsuleMesh_qi2p4")
+
+[node name="SwordCenter" parent="." unique_id=1544335584 node_paths=PackedStringArray("camera") instance=ExtResource("2_ch3w2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+camera = NodePath("../MockCamera")
+
+[node name="MockCamera" type="Node3D" parent="." unique_id=233112345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("3_qoaj6")
+
+[node name="Hands" parent="." unique_id=2128425114 node_paths=PackedStringArray("camera", "weapon") instance=ExtResource("4_51dab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+camera = NodePath("../MockCamera")
+weapon = NodePath("../SwordCenter")
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
